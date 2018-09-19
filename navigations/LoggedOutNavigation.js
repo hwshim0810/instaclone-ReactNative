@@ -1,7 +1,7 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import LoginScreen from '../screens/LoginScreen';
 
-const LoggedOutNavigation = StackNavigator({
+const LoggedOutNavigation = createStackNavigator({
   Login: {
     screen: LoginScreen
   }
