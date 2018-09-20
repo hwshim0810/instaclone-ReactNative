@@ -7,7 +7,7 @@ const NotificationRoute = createStackNavigator(
     Notifications: {
       screen: NotificationsScreen,
       navigationOptions: ({ screenProps }) => ({
-        headerTitle: screenProps.username
+        headerTitle: 'Notifications'
       })
     },
     ...sharedRoutes
