@@ -3,10 +3,10 @@ import { actionCreators as photoActions } from '../../redux/modules/photos';
 import Container from './container';
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { id, is_liked } = ownProps;
+  const { id } = ownProps;
   return {
-    dispatchLike: () => {
-      if (is_liked) {
+    dispatchLike: isLiked => {
+      if (isLiked) {
         return dispatch(photoActions.unlikePhoto(id));
       } else {
         return dispatch(photoActions.likePhoto(id));
