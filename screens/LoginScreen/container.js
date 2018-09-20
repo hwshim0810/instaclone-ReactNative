@@ -32,7 +32,7 @@ class Container extends Component {
     });
   };
 
-  _submit = () => {
+  _submit = async () => {
     const { username, password, isSubmitting } = this.state;
     const { login } = this.props;
 
@@ -42,7 +42,11 @@ class Container extends Component {
           isSubmitting: true
         });
         // Redux action
-        login(username, password);
+        const result = await login(username, password);
+        if (!result) {
+          Alert.alert('Something went wrong, try again');
+          this.setState({ isSubmitting: false });
+        }
       } else {
         Alert.alert('All fields are required');
       }

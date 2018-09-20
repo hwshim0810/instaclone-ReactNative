@@ -32,7 +32,7 @@ function setUser(user) {
 // API Actions
 function login(username, password) {
   return dispatch => {
-    fetch(`${API_URL}/rest-auth/login/`, {
+    return fetch(`${API_URL}/rest-auth/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -44,11 +44,12 @@ function login(username, password) {
     })
       .then(response => response.json())
       .then(json => {
-        if (json.token) {
+        if (json.token && json.user) {
           dispatch(setLogIn(json.token));
-        }
-        if (json.user) {
           dispatch(setUser(json.user));
+          return true;
+        } else {
+          return false;
         }
       });
   };
@@ -84,8 +85,8 @@ function applyLogIn(state, action) {
     token
   };
 }
-function applyLogOut(state, action) {
-  AsyncStorage.clear();
+async function applyLogOut(state, action) {
+  await AsyncStorage.clear();
   return {
     ...state,
     isLoggedIn: false,
