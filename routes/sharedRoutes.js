@@ -5,10 +5,16 @@ import NavButton from '../components/NavButton';
 
 const sharedRoutes = {
   Likes: {
-    screen: LikeScreen
+    screen: LikeScreen,
+    navigationOptions: {
+      headerTitle: 'Likes'
+    }
   },
   Comments: {
-    screen: CommentsScreen
+    screen: CommentsScreen,
+    navigationOptions: {
+      headerTitle: 'Comments'
+    }
   }
 };
 

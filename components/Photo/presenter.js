@@ -9,6 +9,8 @@ import {
   StyleSheet
 } from 'react-native';
 import FadeIn from 'react-native-fade-in-image';
+import { withNavigation } from 'react-navigation';
+import PhotoActions from '../PhotoActions';
 
 const { width, height } = Dimensions.get('window');
 
@@ -49,6 +51,7 @@ const Photo = props => (
       />
     </FadeIn>
     <View style={styles.photoMeta}>
+      <PhotoActions isLiked={props.is_liked} likeCount={props.like_count} />
       <View style={styles.comment}>
         <Text style={styles.commentAuthor}>
           {props.creator.username}{' '}
@@ -157,4 +160,4 @@ Photo.propTypes = {
   is_vertical: PropTypes.bool.isRequired
 };
 
-export default Photo;
+export default withNavigation(Photo);
