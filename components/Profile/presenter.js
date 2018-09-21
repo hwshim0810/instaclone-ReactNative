@@ -112,6 +112,20 @@ const Profile = props => (
             </View>
           </TouchableOpacity>
         </View>
+
+        {props.mode === 'grid' && (
+          <View style={styles.photoContainer}>
+            {props.profileObject.images &&
+              props.profileObject.images.map(photo => (
+                <SquarePhoto key={photo.id} imageURL={photo.file} />
+              ))}
+          </View>
+        )}
+        {props.mode === 'list' &&
+          props.profileObject.images &&
+          props.profileObject.images.map(photo => (
+            <Photo {...photo} key={photo.id} />
+          ))}
       </View>
     </ScrollView>
   </View>
