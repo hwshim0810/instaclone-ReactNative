@@ -9,7 +9,8 @@ class Container extends Component {
   };
 
   state = {
-    isFetching: true
+    isFetching: true,
+    mode: 'grid'
   };
 
   componentDidMount = () => {
@@ -30,9 +31,25 @@ class Container extends Component {
   };
 
   render() {
-    const { isFetching } = this.state;
-    return <Profile {...this.props} isFetching={isFetching} />;
+    return (
+      <Profile
+        {...this.props}
+        {...this.state}
+        changeToList={this._changeToList}
+        changeToGrid={this._changeToGrid}
+      />
+    );
   }
+
+  _changeToList = () => {
+    this.setState({
+      mode: 'list'
+    });
+  };
+
+  _changeToGrid = () => {
+    this.setState({ mode: 'grid' });
+  };
 }
 
 export default Container;
