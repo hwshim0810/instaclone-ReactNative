@@ -186,6 +186,27 @@ function unfollowUser(userId) {
   };
 }
 
+function getProfile(username) {
+  return (dispatch, getState) => {
+    const {
+      user: { token }
+    } = getState();
+    return fetch(`${API_URL}/users/${username}/`, {
+      headers: {
+        Authorization: `JWT ${token}`
+      }
+    })
+      .then(response => {
+        if (response.status === 401) {
+          dispatch(logOut());
+        } else {
+          return response.json();
+        }
+      })
+      .then(json => json);
+  };
+}
+
 // Initial State
 
 const initialState = {
@@ -250,7 +271,8 @@ const actionCreators = {
   getNotifications,
   getOwnProfile,
   followUser,
-  unfollowUser
+  unfollowUser,
+  getProfile
 };
 export { actionCreators };
 
