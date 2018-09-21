@@ -31,7 +31,7 @@ const Profile = props => (
     >
       <View style={styles.profile}>
         <View style={styles.header}>
-          <TouchableOpacity>
+          <TouchableOpacity onPressOut={props.showAS}>
             <Image
               source={
                 props.profileObject.profile_image

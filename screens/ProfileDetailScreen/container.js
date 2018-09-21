@@ -22,17 +22,23 @@ class Container extends Component {
   }
 
   componentDidMount = () => {
+    this._getProfile();
+  };
+
+  render() {
+    return <Profile {...this.state} />;
+  }
+
+  _getProfile = async () => {
     const { getProfile } = this.props;
     const {
       profileObject: { username }
     } = this.state;
-    getProfile(username);
+    const completeProfile = await getProfile(username);
+    if (completeProfile.username) {
+      this.setState({ profileObject: completeProfile });
+    }
   };
-
-  render() {
-    const { profileObject } = this.state;
-    return <Profile {...this.state} />;
-  }
 }
 
 export default Container;
