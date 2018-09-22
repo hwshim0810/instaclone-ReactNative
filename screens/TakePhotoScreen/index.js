@@ -1,6 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, StatusBar } from 'react-native';
+import AddPhotoNavigation from '../../navigations/AddPhotoNavigation';
 
-const TakePhotoScreen = props => <Text>Photo</Text>;
+const TakePhotoScreen = props => (
+  <View style={{ flex: 1 }}>
+    <AddPhotoNavigation />
+    <StatusBar hidden={true} />
+  </View>
+);
 
 export default TakePhotoScreen;
