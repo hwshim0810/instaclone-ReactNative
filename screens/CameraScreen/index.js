@@ -14,6 +14,7 @@ import FitImage from 'react-native-fit-image';
 class CameraScreen extends Component {
   state = {
     hasCameraPermissions: null,
+    hasDataStorePermissions: null,
     type: Camera.Constants.Type.back,
     flash: Camera.Constants.FlashMode.off,
     pictureTaken: false,
@@ -22,8 +23,10 @@ class CameraScreen extends Component {
 
   componentWillMount = async () => {
     const camera = await Permissions.askAsync(Permissions.CAMERA);
+    const dataStore = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     this.setState({
-      hasCameraPermissions: camera.status === 'granted'
+      hasCameraPermissions: camera.status === 'granted',
+      hasDataStorePermissions: dataStore
     });
   };
 
@@ -86,9 +89,24 @@ class CameraScreen extends Component {
             </Camera>
           )}
           <View style={styles.btnContainer} onPressOut={this._takePhoto}>
-            <TouchableOpacity>
-              <View style={styles.btn} />
-            </TouchableOpacity>
+            {pictureTaken ? (
+              <View style={styles.photoActions}>
+                <TouchableOpacity onPressOut={this._rejectPhoto}>
+                  <MaterialIcons name={'cancel'} size={60} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity onPressOut={this._approvePhoto}>
+                  <MaterialIcons
+                    name={'check-circle'}
+                    size={60}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity onPressOut={this._takePhoto}>
+                <View style={styles.btn} />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       );
@@ -125,10 +143,25 @@ class CameraScreen extends Component {
           quality: 0.5,
           exif: true
         });
-        console.log(takenPhoto);
         this.setState({ picture: takenPhoto.uri, pictureTaken: true });
       }
     }
+  };
+
+  _rejectPhoto = () => {
+    this.setState({
+      picture: null,
+      pictureTaken: false
+    });
+  };
+
+  _approvePhoto = async () => {
+    const { picture } = this.state;
+    const saveResult = await CameraRoll.saveToCameraRoll(picture, 'photo');
+    this.setState({
+      picture: null,
+      pictureTaken: false
+    });
   };
 }
 
@@ -161,6 +194,13 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     margin: 10
+  },
+  photoActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    flex: 1,
+    alignItems: 'center',
+    width: 250
   }
 });
 
