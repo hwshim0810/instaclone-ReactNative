@@ -22,6 +22,10 @@ class Container extends Component {
     search: PropTypes.array
   };
 
+  static defaultProps = {
+    search: []
+  };
+
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
