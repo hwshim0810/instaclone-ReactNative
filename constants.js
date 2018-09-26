@@ -1,1 +1,2 @@
-export const API_URL = 'http://947884e1.ngrok.io';
+export const API_URL = '';
+export const FB_APP_ID = '';
